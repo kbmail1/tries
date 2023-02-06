@@ -1,0 +1,16 @@
+.landing {
+  margin: 1rem auto;
+  width: 100%;
+  height: auto;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+}
+
+.btn {
+
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+
+}

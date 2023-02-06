@@ -1,0 +1,10 @@
+<div [ngClass]="{ 'container-self': this.molCommentContext.self, 'container-peer': !this.molCommentContext.self }">
+  <!-- {{ this.molCommentContext.user_name}} -->
+  <span [ngClass]="{ 'text-self': this.molCommentContext.self!, 'text-peer': !this.molCommentContext.self! }">
+    <div
+      style="font-size:x-small;text-decoration:underline">
+      {{ this.molCommentContext.user_name }} - {{ this.molCommentContext.comment_time }}
+    </div>
+    {{ this.molCommentContext.comment }}
+  </span>
+</div>

@@ -1,0 +1,445 @@
+openapi: 3.0.0
+
+
+#
+# 1. login
+# 2. Get user details
+# 3. Create user / register
+# 4. Delete user
+# 5. Get user list
+# 6. Get active users
+# 7. Create new room
+# 8. delete room
+# 9. Get all users in given room
+# 10. Get rooms list
+# 11. Join room
+# 12. Leave room
+# 13: logout
+
+info:
+  title: chat
+  version: v1
+servers:
+- url: http://localhost:3000
+  description: Local server
+
+paths:
+
+  /v1/login:
+    post:
+      description: Login
+      tags:
+        - Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - login_info
+              properties:
+                name:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: 'Login successful'
+        '401':
+          description: 'Invalid credentials'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: 'User does not exist'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /v1/user:
+    get:
+      operationId: getUser
+      summary: "Get details of specified user"
+      tags:
+        - Get user details
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+            description: id of user to get information
+      responses:
+        '200':
+          description: Successfully retrieved user information
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - type: object
+                    properties:
+                      user_id:
+                        type: string
+                  - $ref: '#/components/schemas/User'
+
+        '404':
+          description: 'User does not exist'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+    post:
+      description: Create new user
+      tags:
+        - Create user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    password:
+                      type: string
+                - $ref: '#/components/schemas/User'
+
+      responses:
+        '200':
+          description: 'Successfully created new user'
+        '400':
+          description: 'invalid request'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+    delete:
+      operationId: deleteUser
+      tags:
+        - Delete user
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: string
+          required: true
+          description: name to delete
+      responses:
+          '200':
+            description: 'Successfully deleted user'
+          '400':
+            description: 'invalid request'
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+
+  /v1/users:
+    get:
+      operationId: getUsers
+      summary: "Request all existing users"
+      tags:
+        - Get user list
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+
+  /v1/logout:
+    get:
+      description: Logout
+      tags:
+        - Logout
+      responses:
+        '200':
+          description: 'Logout successful'
+
+  /v1/active-users:
+    get:
+      operationId: getUsers
+      summary: "Request all existing users"
+      tags:
+        - Get Active Users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  since:
+                    type: string
+
+  /v1/room:
+    post:
+      description: Create new room
+      tags:
+        - Create new room
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+      responses:
+        '200':
+          description: Room created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  room_name:
+                    type: string
+        '401':
+          description: Room already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+    delete:
+      operationId: deleteRoom
+      tags:
+        - Delete room
+      parameters:
+        - in: query
+          name: name
+          schema:
+            type: object
+            properties:
+              room_name:
+                type: string
+              creator_name:
+                type: string
+
+          required: true
+          description: name to delete
+      responses:
+          '200':
+            description: 'Operation successful'
+          '400':
+            description: 'invalid request'
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+
+  /v1/room_users:
+    get:
+      operationId: getAllUsersInRoom
+      summary: Get all users in the room
+      tags:
+        - Get All users in room
+      parameters:
+        - in: query
+          name: room_name
+          schema:
+            type: string
+          description: room name
+        - in: query
+          name: creator_name
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved users of the room
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+
+  /v1/rooms:
+    get:
+      operationId: getUsers
+      summary: "Request all existing rooms"
+      tags:
+        - Get rooms list
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+
+  /v1/join-room:
+    post:
+      description: "Join a room based on someone's invite"
+      tags:
+        - Join Room
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+      responses:
+        '200':
+          description: Joined room successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  room_name:
+                    type: string
+        '401':
+          description: Invalid request. Failed to join room
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /v1/leave-room:
+    post:
+      description: "Leave a room"
+      tags:
+        - Leave Room
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+      responses:
+        '200':
+          description: Left room successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  room_name:
+                    type: string
+        '401':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+
+  /v1/register:
+    post:
+      description: "Register a (create) new user"
+      tags:
+        - Register user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: new user registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  room_name:
+                    type: string
+        '401':
+          description: Invalid request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Registration failed.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        dob:
+          type: string
+    Room:
+      type: object
+      properties:
+        room_name:
+          type: string
+        creator_name:
+          type: string
+    RegisterRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        dob:
+          type: string
+    RoomUser:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Room'
+        - type: object
+          properties:
+            user_name:
+              type: string
+
+
+

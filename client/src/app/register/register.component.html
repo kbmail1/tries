@@ -1,0 +1,21 @@
+<div class="'container">
+  <form class='clsForm' [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="chat name" formControlName="user_name" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Password" formControlName="password" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput formControlName="dob" [matDatepicker]="dobPicker" />
+      <mat-datepicker-toggle matPrefix [for]="dobPicker"></mat-datepicker-toggle>
+      <mat-datepicker #dobPicker></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Register</button>
+  </form>
+</div>

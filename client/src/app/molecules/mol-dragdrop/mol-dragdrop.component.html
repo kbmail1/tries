@@ -1,0 +1,21 @@
+
+
+<div class="container">
+  <div cdkDropListGroup>
+    <div class="mol-dragdrop-container">
+      <h3>{{ context.sourceHeader }} - ( {{ context.source.length}} ) </h3>
+
+      <div cdkDropList [cdkDropListData]="context.source" class="mol-dragdrop-list" (cdkDropListDropped)="drop($event)">
+        <div class="mol-dragdrop-box" *ngFor="let item of context.source" cdkDrag>{{item}}</div>
+      </div>
+    </div>
+
+    <div class="mol-dragdrop-container">
+      <h3>{{ context.targetHeader }} - ({{ context.target.length}})</h3>
+
+      <div cdkDropList [cdkDropListData]="context.target" class="mol-dragdrop-list" (cdkDropListDropped)="drop($event)">
+        <div class="mol-dragdrop-box" *ngFor="let item of context.target" cdkDrag>{{item}}</div>
+      </div>
+    </div>
+  </div>
+</div>

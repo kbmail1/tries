@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  margin: 0px 1rem;
+  // border: 4px solid #ccc;
+  justify-content: space-around;
+
+  max-height: 100%;
+}
+
+.rooms-list-container {
+  border: 1px solid #ccc;
+  max-width: 20rem;
+  height: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+}
+
+.room-label {
+  padding: 0.5rem 0.5rem;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.6);
+
+  box-sizing: border-box;
+  cursor: pointer;
+  background: white;
+  font-size: 1rem;
+  &:last-child {
+    border: none;
+  }
+}
+.create-room {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  justify-items: center;
+  &:first-child {
+    padding-bottom: 2rem;
+  }
+}
+
+.create-room-btn {
+  cursor: pointer;
+}
+.create-room-input {
+  margin-left: 1rem;
+  padding-left: 0.5rem;
+  border-bottom: #ccc solid 1px;
+  max-width: 7rem;
+}
+
+.create-room-icon {
+  position: relative;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.open-room {
+  width: 500px;
+  min-height: 300px;
+}

@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="room-container">
+    <div class="room-header">
+      {{ this.room.creator_name }} - {{ this.room.room_name }}
+      <hr>
+    </div>
+    <div class="room_comments">
+      <app-mol-comment *ngFor="let comment of this.comments" [molCommentContext]="comment"></app-mol-comment>
+    </div>
+  </div>
+  <div class="room-new-comment-container">
+    <input #newText class="room-new-comment-txt" matInput placeholder="Type your comment here">
+    <mat-icon class="room-new-comment-icn" (click)="addComment(newText)">arrow_circle_right</mat-icon>
+  </div>
+
+</div>

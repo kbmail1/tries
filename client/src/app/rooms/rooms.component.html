@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="rooms-list-container">
+    <div class="create-room">
+      <span class="create-room-btn">
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">New room</button>
+      </span>
+      <input *ngIf="!newRoomInputHide" #newRoomName class="create-room-input" matInput placeholder="New Room name">
+      <mat-icon *ngIf="!newRoomInputHide" class="create-room-icon" (click)="createRoom()">arrow_circle_right</mat-icon>
+    </div>
+    <div *ngFor="let room of rooms; let i = index" class="room-label" (click)="onRoomClick(i)">
+      {{i}} - {{ room.creator_name }}-{{room.room_name}}
+    </div>
+  </div>
+  <div class="open-room">
+    <app-room *ngIf="roomSelected" [room]="rooms[roomSelectedIndex]"></app-room>
+  </div>
+</div>

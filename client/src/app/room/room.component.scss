@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.room-container {
+  margin-left: 1rem;
+  min-height: 500px;
+  padding: 0.5rem 1rem 0 0.5rem;
+  color: rgb(0, 0, 0, 0.5);
+  border: 1px solid #ccc;
+  max-height: 100%;
+
+  .room-header {
+    margin: auto;
+  }
+  .room-comments {
+    display: block;
+    margin: 1rem 0;
+    padding: 1rem 0;
+  }
+}
+
+.room-new-comment-container {
+  position: relative;
+  left: 1rem;
+  padding: 0.5rem 1rem 0 0.5rem;
+
+  display: flex;
+  flex-direction: row;
+
+  .room-new-comment-txt {
+    position: relative;
+    left: 0;
+    top: 1rem;
+    padding-left: 0.5rem;
+    right: -11rem;
+    line-height: 1.7rem;
+    border-bottom: #ccc;
+    margin-bottom: 1rem;
+    max-width: 25rem;
+  }
+  .room-new-comment-icn {
+    position: relative;
+    top: 1rem;
+    left: 1rem;
+    cursor: pointer;
+  }
+}
+
+.meta-info {
+  font-size: x-small !important;
+  text-decoration: underline !important;
+}
